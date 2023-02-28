@@ -71,23 +71,31 @@ Which type should convert, the available types are:
                     fromTag = tag
                 }
                 convertAndPrintUTTypes(from: fromTag, with: tagClass, originalInput: tag)
-                print("")
+                if fullInfo {
+                    print("")
+                }
             }
         case .extension:
             for tag in tags {
                 convertAndPrintUTTypes(from: tag, with: .filenameExtension, originalInput: tag)
-                print("")
+                if fullInfo {
+                    print("")
+                }
             }
         case .mime:
             for tag in tags {
                 convertAndPrintUTTypes(from: tag, with: .mimeType, originalInput: tag)
-                print("")
+                if fullInfo {
+                    print("")
+                }
             }
         case .file:
             for tag in tags {
                 let ext: String = fileExtension(for: tag)
                 convertAndPrintUTTypes(from: ext, with: .filenameExtension, originalInput: tag)
-                print("")
+                if fullInfo {
+                    print("")
+                }
             }
         case .uti:
             for tag in tags {
