@@ -103,7 +103,7 @@ File extensions: jpeg, jpg, jpe
 ### Show information for any UTIs
 
 ```bash
-uti-convert -f uti public.jpeg public.png
+> uti-convert -f uti public.jpeg public.png
 #output
 public.jpeg:
 ------------
