@@ -9,6 +9,8 @@ enum ConvertError: Error {
 @main
 struct uti_convert: ParsableCommand {
 
+    static var _commandName: String = "uti-convert"
+
     enum FromType: String, CaseIterable, Decodable {
         case auto
         case file
