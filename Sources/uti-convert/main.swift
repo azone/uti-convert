@@ -1,9 +1,11 @@
 import System
 import UniformTypeIdentifiers
 import ArgumentParser
+import Algorithms
 
 enum ConvertError: Error {
     case unsupportedType
+    case convertFailed
 }
 
 @main
@@ -11,11 +13,21 @@ struct uti_convert: ParsableCommand {
 
     static var _commandName: String = "uti-convert"
 
+    private static let specialFileExtensionMapping: [String: String] = [
+        "makefile": "make",
+        "podfile": "rb",
+        "gemfile": "rb",
+        "fastlane": "rb",
+        "podfile.lock": "yaml",
+        "package.resolved": "json"
+    ]
+
     enum FromType: String, CaseIterable, Decodable {
         case auto
         case file
         case `extension`
         case mime
+        case uti
 
         static var availabeTypesString: String {
             let fmt = ListFormatter()
@@ -23,9 +35,19 @@ struct uti_convert: ParsableCommand {
         }
     }
 
+    @Flag(name: .long, help: "Show full information")
+    var fullInfo: Bool = false
+
     @Option(
         name: .shortAndLong,
-        help: "Which type(available types are: \(FromType.availabeTypesString)) should convert",
+        help: """
+Which type should convert, the available types are:
+    - file: get file extension automatically from file
+    - extension: file extension, e.g. swift
+    - mime: MIME type, e.g. png
+    - uti: show MIME types and file extensions for specified UTI
+    - auto: detect extension or mime type automatically
+""",
         completion: .list(FromType.allCases.map(\.rawValue))
     )
     var fromType: String = FromType.auto.rawValue
@@ -48,24 +70,33 @@ struct uti_convert: ParsableCommand {
                 } else {
                     fromTag = tag
                 }
-                let types = convertUTIs(from: fromTag, with: tagClass)
-                print("\(tag) -> \(types.joined(separator: ", "))")
+                convertAndPrintUTTypes(from: fromTag, with: tagClass, originalInput: tag)
+                print("")
             }
         case .extension:
             for tag in tags {
-                let types = convertUTIs(from: tag, with: .filenameExtension)
-                print("\(tag) -> \(types.joined(separator: ", "))")
+                convertAndPrintUTTypes(from: tag, with: .filenameExtension, originalInput: tag)
+                print("")
             }
         case .mime:
             for tag in tags {
-                let types = convertUTIs(from: tag, with: .mimeType)
-                print("\(tag) -> \(types.joined(separator: ", "))")
+                convertAndPrintUTTypes(from: tag, with: .mimeType, originalInput: tag)
+                print("")
             }
         case .file:
             for tag in tags {
                 let ext: String = fileExtension(for: tag)
-                let types = convertUTIs(from: ext, with: .filenameExtension)
-                print("\(tag) -> \(types.joined(separator: ", "))")
+                convertAndPrintUTTypes(from: ext, with: .filenameExtension, originalInput: tag)
+                print("")
+            }
+        case .uti:
+            for tag in tags {
+                guard let type = UTType(tag) else {
+                    print("Failed to get information for \(tag)")
+                    continue
+                }
+                printUTTypeInfo(CollectionOfOne(type), originalInput: tag, fullInfo: true)
+                print("")
             }
         }
     }
@@ -79,20 +110,56 @@ struct uti_convert: ParsableCommand {
         return .filenameExtension
     }
 
-    private func convertUTIs(from tag: String, with tagClass: UTTagClass) -> [String] {
+    private func convertAndPrintUTTypes(from tag: String, with tagClass: UTTagClass, originalInput: String) {
         let types = UTType.types(
             tag: tag,
             tagClass: tagClass,
             conformingTo: nil
         )
-        return types.map(\.identifier)
+
+        printUTTypeInfo(types, originalInput: originalInput, fullInfo: fullInfo)
+    }
+
+    private func printUTTypeInfo<T: Collection>(_ types: T, originalInput: String, fullInfo: Bool) where T.Element == UTType {
+        guard !types.isEmpty else {
+            print("Failed to get information for \(originalInput)")
+            return
+        }
+
+        let identifers = types.map(\.identifier).joined(separator: ", ")
+        guard fullInfo else {
+            print("\(originalInput) -> \(identifers)")
+            return
+        }
+        print("\(originalInput):")
+        print(String(repeating: "-", count: originalInput.count + 1))
+        print("UTIs: \(identifers)")
+
+        let mimeTypes = types.flatMap { $0.tags[.mimeType, default: []] }
+            .uniqued()
+        print("MIME types: \(mimeTypes.joined(separator: ", "))")
+
+        let fileExtensions = types.flatMap { $0.tags[.filenameExtension, default: []] }
+            .uniqued()
+        print("File extensions: \(fileExtensions.joined(separator: ", "))")
     }
 
     private func fileExtension(for tag: String) -> String {
         if #available(macOS 12.0, *) {
             let filePath = FilePath(tag)
+            if let lastComponent = filePath.lastComponent?.string.lowercased() {
+                if let ext = Self.specialFileExtensionMapping[lastComponent] {
+                    return ext
+                }
+            }
             return filePath.extension ?? tag
         } else {
+            let splited = tag.split { $0 == "/" }
+            if let lastComponent = splited.last?.lowercased() {
+                if let ext = Self.specialFileExtensionMapping[lastComponent] {
+                    return ext
+                }
+            }
             return tag.split(whereSeparator: { $0 == "." })
                 .last
                 .map(String.init(_:)) ?? tag
