@@ -28,7 +28,7 @@ uti-convert --generate-completion-script > ~/.oh-my-zsh/completions/_uti-convert
 uti-convert --generate-completion-script >> ~/.bashrc # or other completion script file/directory
 ```
 
-> **Note:** _This command will detect current shell automatically, or you can specify one with: `uti-convert --generate-completion-script [fish|zsh|bash]`_
+> **Note:** _This command will detect current shell automatically, or you can specify one with: `uti-convert --generate-completion-script [fish|zsh|bash] > /path/to/completion/file`_
 
 ## Usage
 
