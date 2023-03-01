@@ -2,6 +2,37 @@
 
 Convert file extension or MIME type to UTI(Uniform Type Identifiers) and vice versa.
 
+## Installation
+
+1. Clone or download the source code from this repository
+2. cd the source code directory
+3. do `make install` command
+
+
+## Generate shell completion script
+
+### For fish
+
+```
+uti-convert --generate-completion-script > ~/.config/fish/completions/uti-convert.fish
+```
+
+### For zsh
+
+```
+uti-convert --generate-completion-script >> ~/.zshrc # or other completion script file/directory
+```
+
+### For bash
+
+```
+uti-convert --generate-completion-script >> ~/.bashrc # or other completion script file/directory
+```
+
+> **Note:** _This command will detect current shell automatically, or you can specify one with: `uti-convert --generate-completion-script [fish|zsh|bash]`_
+
+### For zsh
+
 ## Usage
 
 ```bash
