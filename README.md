@@ -33,13 +33,13 @@ uti-convert --generate-completion-script >> ~/.bashrc # or other completion scri
 ## Usage
 
 ```bash
-USAGE: uti-convert [--full-info] [--from-type <from-type>] <tags> ...
+USAGE: uti-convert [--full] [--from-type <from-type>] <tags> ...
 
 ARGUMENTS:
   <tags>                  type list
 
 OPTIONS:
-  --full-info             Show full information
+  --full             Show full information
   -f, --from-type <from-type>
                           Which type should convert, the available types are:
                               - file: get file extension automatically from file
@@ -65,7 +65,7 @@ image/jpg -> public.jpeg
 image/gif -> com.compuserve.gif, com.apple.private.auto-loop-gif
 
 
-> uti-convert --full-info jpg gif
+> uti-convert --full jpg gif
 # output
 jpg:
 ----
@@ -79,7 +79,7 @@ UTIs: com.compuserve.gif, com.apple.private.auto-loop-gif
 MIME types: image/gif
 File extensions: gif
 
-> uti-convert --full-info image/jpg image/gif
+> uti-convert --full image/jpg image/gif
 # output
 image/jpg:
 ----------
@@ -102,7 +102,7 @@ File extensions: gif
 jpg -> public.jpeg
 
 
-> uti-convert --full-info -f extension jpg
+> uti-convert --full -f extension jpg
 # output
 jpg:
 ----
@@ -119,7 +119,7 @@ File extensions: jpeg, jpg, jpe
 somefile.jpg -> public.jpeg
 
 
-> uti-convert --full-info -f file somefile.jpg
+> uti-convert --full -f file somefile.jpg
 # output
 somefile.jpg:
 -------------
