@@ -36,7 +36,7 @@ struct uti_convert: ParsableCommand {
     }
 
     @Flag(name: .long, help: "Show full information")
-    var fullInfo: Bool = false
+    var full: Bool = false
 
     @Option(
         name: .shortAndLong,
@@ -71,21 +71,21 @@ Which type should convert, the available types are:
                     fromTag = tag
                 }
                 convertAndPrintUTTypes(from: fromTag, with: tagClass, originalInput: tag)
-                if fullInfo {
+                if full {
                     print("")
                 }
             }
         case .extension:
             for tag in tags {
                 convertAndPrintUTTypes(from: tag, with: .filenameExtension, originalInput: tag)
-                if fullInfo {
+                if full {
                     print("")
                 }
             }
         case .mime:
             for tag in tags {
                 convertAndPrintUTTypes(from: tag, with: .mimeType, originalInput: tag)
-                if fullInfo {
+                if full {
                     print("")
                 }
             }
@@ -93,7 +93,7 @@ Which type should convert, the available types are:
             for tag in tags {
                 let ext: String = fileExtension(for: tag)
                 convertAndPrintUTTypes(from: ext, with: .filenameExtension, originalInput: tag)
-                if fullInfo {
+                if full {
                     print("")
                 }
             }
@@ -125,7 +125,7 @@ Which type should convert, the available types are:
             conformingTo: nil
         )
 
-        printUTTypeInfo(types, originalInput: originalInput, fullInfo: fullInfo)
+        printUTTypeInfo(types, originalInput: originalInput, fullInfo: full)
     }
 
     private func printUTTypeInfo<T: Collection>(_ types: T, originalInput: String, fullInfo: Bool) where T.Element == UTType {
