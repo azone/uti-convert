@@ -33,13 +33,13 @@ uti-convert --generate-completion-script >> ~/.bashrc # or other completion scri
 ## Usage
 
 ```bash
-USAGE: uti-convert [--full] [--from-type <from-type>] <tags> ...
+uti-convert [--full] [--from-type <from-type>] <tags> ...
 
 ARGUMENTS:
   <tags>                  type list
 
 OPTIONS:
-  --full             Show full information
+  --full                  Show full information
   -f, --from-type <from-type>
                           Which type should convert, the available types are:
                               - file: get file extension automatically from file
