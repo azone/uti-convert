@@ -8,7 +8,6 @@ Convert file extension or MIME type to UTI(Uniform Type Identifiers) and vice ve
 2. cd the source code directory
 3. do `make install` command
 
-
 ## Generate shell completion script
 
 ### For fish
@@ -30,8 +29,6 @@ uti-convert --generate-completion-script >> ~/.bashrc # or other completion scri
 ```
 
 > **Note:** _This command will detect current shell automatically, or you can specify one with: `uti-convert --generate-completion-script [fish|zsh|bash]`_
-
-### For zsh
 
 ## Usage
 
