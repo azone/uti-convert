@@ -20,7 +20,7 @@ uti-convert --generate-completion-script > ~/.config/fish/completions/uti-conver
 ### For zsh
 
 ```
-uti-convert --generate-completion-script >> ~/.zshrc # or other completion script file/directory
+uti-convert --generate-completion-script > ~/.oh-my-zsh/completions/_uti-convert # or other completion script file/directory
 ```
 
 ### For bash
