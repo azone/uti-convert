@@ -150,6 +150,12 @@ Which type should convert, the available types are:
         let fileExtensions = types.flatMap { $0.tags[.filenameExtension, default: []] }
             .uniqued()
         print("File extensions: \(fileExtensions.joined(separator: ", "))")
+
+        if !identifers.isEmpty {
+            print("UTI Tree:")
+            print("╭────────╯")
+            printUTITree(Array(types))
+        }
     }
 
     private func fileExtension(for tag: String) -> String {
@@ -172,5 +178,35 @@ Which type should convert, the available types are:
                 .last
                 .map(String.init(_:)) ?? tag
         }
+    }
+
+    private func printUTITree(_ types: [UTType], level: Int = 0, leaves: [Bool] = []) {
+        guard !types.isEmpty else { return }
+
+        for type in types {
+            let isLast = type.isLast(of: types)
+            let prefix = treePrefix(with: level, isLeaf: isLast, leaves: leaves)
+            print("\(prefix)\(type.identifier)")
+            let supertypes = type.supertypes
+                .sorted { $0.identifier < $1.identifier }
+            printUTITree(supertypes, level: level + 1, leaves: leaves + CollectionOfOne(isLast))
+        }
+    }
+
+    private func treePrefix(with level: Int, isLeaf: Bool, leaves: [Bool]) -> String {
+        let suffix = isLeaf ? "└── " : "├── "
+        guard level > 0 else {
+            return suffix
+        }
+
+        let prefix = leaves.map { $0 ? "   " : "│  " }
+            .joined()
+        return "\(prefix)\(suffix)"
+    }
+}
+
+extension UTType {
+    func isLast(of types: [UTType]) -> Bool {
+        types.last == self
     }
 }
