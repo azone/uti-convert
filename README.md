@@ -32,7 +32,7 @@ uti-convert --generate-completion-script >> ~/.bashrc # or other completion scri
 
 ## Usage
 
-```bash
+```
 uti-convert [--full] [--from-type <from-type>] <tags> ...
 
 ARGUMENTS:
@@ -53,7 +53,7 @@ OPTIONS:
 
 ### Show UTIs with auto-detection
 
-```bash
+```
 > uti-convert jpg  gif
 # output
 jpg -> public.jpeg
@@ -72,31 +72,81 @@ jpg:
 UTIs: public.jpeg
 MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
+UTI Tree:
+╭────────╯
+└── public.jpeg
+   ├── public.content
+   ├── public.data
+   │  └── public.item
+   ├── public.image
+   │  ├── public.content
+   │  ├── public.data
+   │  │  └── public.item
+   │  └── public.item
+   └── public.item
 
 gif:
 ----
 UTIs: com.compuserve.gif, com.apple.private.auto-loop-gif
 MIME types: image/gif
 File extensions: gif
+UTI Tree:
+╭────────╯
+├── com.compuserve.gif
+│  ├── public.content
+│  ├── public.data
+│  │  └── public.item
+│  ├── public.image
+│  │  ├── public.content
+│  │  ├── public.data
+│  │  │  └── public.item
+│  │  └── public.item
+│  └── public.item
+└── com.apple.private.auto-loop-gif
 
 > uti-convert --full image/jpg image/gif
 # output
-image/jpg:
-----------
+jpg:
+----
 UTIs: public.jpeg
 MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
+UTI Tree:
+╭────────╯
+└── public.jpeg
+   ├── public.content
+   ├── public.data
+   │  └── public.item
+   ├── public.image
+   │  ├── public.content
+   │  ├── public.data
+   │  │  └── public.item
+   │  └── public.item
+   └── public.item
 
-image/gif:
-----------
-UTIs: com.compuserve.gif
+gif:
+----
+UTIs: com.compuserve.gif, com.apple.private.auto-loop-gif
 MIME types: image/gif
 File extensions: gif
+UTI Tree:
+╭────────╯
+├── com.compuserve.gif
+│  ├── public.content
+│  ├── public.data
+│  │  └── public.item
+│  ├── public.image
+│  │  ├── public.content
+│  │  ├── public.data
+│  │  │  └── public.item
+│  │  └── public.item
+│  └── public.item
+└── com.apple.private.auto-loop-gif
 ```
 
 ### Convert file extension to UITs
 
-```bash
+```
 > uti-convert -f extension jpg
 # output
 jpg -> public.jpeg
@@ -109,11 +159,23 @@ jpg:
 UTIs: public.jpeg
 MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
+UTI Tree:
+╭────────╯
+└── public.jpeg
+   ├── public.content
+   ├── public.data
+   │  └── public.item
+   ├── public.image
+   │  ├── public.content
+   │  ├── public.data
+   │  │  └── public.item
+   │  └── public.item
+   └── public.item
 ```
 
 ### Convert file to UITs
 
-```bash
+```
 > uti-convert -f file somefile.jpg
 # output
 somefile.jpg -> public.jpeg
@@ -126,22 +188,58 @@ somefile.jpg:
 UTIs: public.jpeg
 MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
+UTI Tree:
+╭────────╯
+└── public.jpeg
+   ├── public.content
+   ├── public.data
+   │  └── public.item
+   ├── public.image
+   │  ├── public.content
+   │  ├── public.data
+   │  │  └── public.item
+   │  └── public.item
+   └── public.item
 ```
 
 ### Show information for any UTIs
 
-```bash
+```
 > uti-convert -f uti public.jpeg public.png
-#output
+# output
 public.jpeg:
 ------------
 UTIs: public.jpeg
 MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
+UTI Tree:
+╭────────╯
+└── public.jpeg
+   ├── public.content
+   ├── public.data
+   │  └── public.item
+   ├── public.image
+   │  ├── public.content
+   │  ├── public.data
+   │  │  └── public.item
+   │  └── public.item
+   └── public.item
 
 public.png:
 -----------
 UTIs: public.png
 MIME types: image/png
 File extensions: png
+UTI Tree:
+╭────────╯
+└── public.png
+   ├── public.content
+   ├── public.data
+   │  └── public.item
+   ├── public.image
+   │  ├── public.content
+   │  ├── public.data
+   │  │  └── public.item
+   │  └── public.item
+   └── public.item
 ```
