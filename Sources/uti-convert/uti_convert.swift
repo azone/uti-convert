@@ -1,7 +1,6 @@
 import System
 import UniformTypeIdentifiers
 import ArgumentParser
-import Algorithms
 
 enum ConvertError: Error {
     case unsupportedType
@@ -180,25 +179,21 @@ Which type should convert, the available types are:
         }
     }
 
-    private func printUTITree(_ types: [UTType], level: Int = 0, leaves: [Bool] = []) {
+    private func printUTITree(_ types: [UTType], leaves: [Bool] = []) {
         guard !types.isEmpty else { return }
 
         for type in types {
             let isLast = type.isLast(of: types)
-            let prefix = treePrefix(with: level, isLeaf: isLast, leaves: leaves)
+            let prefix = treePrefix(isLeaf: isLast, leaves: leaves)
             print("\(prefix)\(type.identifier)")
             let supertypes = type.supertypes
                 .sorted { $0.identifier < $1.identifier }
-            printUTITree(supertypes, level: level + 1, leaves: leaves + CollectionOfOne(isLast))
+            printUTITree(supertypes, leaves: leaves + CollectionOfOne(isLast))
         }
     }
 
-    private func treePrefix(with level: Int, isLeaf: Bool, leaves: [Bool]) -> String {
+    private func treePrefix(isLeaf: Bool, leaves: [Bool]) -> String {
         let suffix = isLeaf ? "└── " : "├── "
-        guard level > 0 else {
-            return suffix
-        }
-
         let prefix = leaves.map { $0 ? "   " : "│  " }
             .joined()
         return "\(prefix)\(suffix)"
@@ -208,5 +203,18 @@ Which type should convert, the available types are:
 extension UTType {
     func isLast(of types: [UTType]) -> Bool {
         types.last == self
+    }
+}
+
+extension Collection where Element: Hashable {
+    public func uniqued() -> [Element] {
+        var existElements = Set<Element>()
+        return filter { elm in
+            guard !existElements.contains(elm) else {
+                return false
+            }
+            existElements.insert(elm)
+            return true
+        }
     }
 }
