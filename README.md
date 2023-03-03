@@ -40,6 +40,7 @@ ARGUMENTS:
 
 OPTIONS:
   --full                  Show full information
+  --without-tree          Without UTI tree information
   -f, --from-type <from-type>
                           Which type should convert, the available types are:
                               - file: get file extension automatically from file
@@ -74,16 +75,16 @@ MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
 UTI Tree:
 ╭────────╯
-└── public.jpeg
+╰── public.jpeg
    ├── public.content
    ├── public.data
-   │  └── public.item
+   │  ╰── public.item
    ├── public.image
    │  ├── public.content
    │  ├── public.data
-   │  │  └── public.item
-   │  └── public.item
-   └── public.item
+   │  │  ╰── public.item
+   │  ╰── public.item
+   ╰── public.item
 
 gif:
 ----
@@ -95,14 +96,14 @@ UTI Tree:
 ├── com.compuserve.gif
 │  ├── public.content
 │  ├── public.data
-│  │  └── public.item
+│  │  ╰── public.item
 │  ├── public.image
 │  │  ├── public.content
 │  │  ├── public.data
-│  │  │  └── public.item
-│  │  └── public.item
-│  └── public.item
-└── com.apple.private.auto-loop-gif
+│  │  │  ╰── public.item
+│  │  ╰── public.item
+│  ╰── public.item
+╰── com.apple.private.auto-loop-gif
 
 > uti-convert --full image/jpg image/gif
 # output
@@ -113,16 +114,16 @@ MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
 UTI Tree:
 ╭────────╯
-└── public.jpeg
+╰── public.jpeg
    ├── public.content
    ├── public.data
-   │  └── public.item
+   │  ╰── public.item
    ├── public.image
    │  ├── public.content
    │  ├── public.data
-   │  │  └── public.item
-   │  └── public.item
-   └── public.item
+   │  │  ╰── public.item
+   │  ╰── public.item
+   ╰── public.item
 
 gif:
 ----
@@ -134,14 +135,14 @@ UTI Tree:
 ├── com.compuserve.gif
 │  ├── public.content
 │  ├── public.data
-│  │  └── public.item
+│  │  ╰── public.item
 │  ├── public.image
 │  │  ├── public.content
 │  │  ├── public.data
-│  │  │  └── public.item
-│  │  └── public.item
-│  └── public.item
-└── com.apple.private.auto-loop-gif
+│  │  │  ╰── public.item
+│  │  ╰── public.item
+│  ╰── public.item
+╰── com.apple.private.auto-loop-gif
 ```
 
 ### Convert file extension to UITs
@@ -161,16 +162,16 @@ MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
 UTI Tree:
 ╭────────╯
-└── public.jpeg
+╰── public.jpeg
    ├── public.content
    ├── public.data
-   │  └── public.item
+   │  ╰── public.item
    ├── public.image
    │  ├── public.content
    │  ├── public.data
-   │  │  └── public.item
-   │  └── public.item
-   └── public.item
+   │  │  ╰── public.item
+   │  ╰── public.item
+   ╰── public.item
 ```
 
 ### Convert file to UITs
@@ -190,16 +191,16 @@ MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
 UTI Tree:
 ╭────────╯
-└── public.jpeg
+╰── public.jpeg
    ├── public.content
    ├── public.data
-   │  └── public.item
+   │  ╰── public.item
    ├── public.image
    │  ├── public.content
    │  ├── public.data
-   │  │  └── public.item
-   │  └── public.item
-   └── public.item
+   │  │  ╰── public.item
+   │  ╰── public.item
+   ╰── public.item
 ```
 
 ### Show information for any UTIs
@@ -214,16 +215,16 @@ MIME types: image/jpeg, image/jpg
 File extensions: jpeg, jpg, jpe
 UTI Tree:
 ╭────────╯
-└── public.jpeg
+╰── public.jpeg
    ├── public.content
    ├── public.data
-   │  └── public.item
+   │  ╰── public.item
    ├── public.image
    │  ├── public.content
    │  ├── public.data
-   │  │  └── public.item
-   │  └── public.item
-   └── public.item
+   │  │  ╰── public.item
+   │  ╰── public.item
+   ╰── public.item
 
 public.png:
 -----------
@@ -232,14 +233,14 @@ MIME types: image/png
 File extensions: png
 UTI Tree:
 ╭────────╯
-└── public.png
+╰── public.png
    ├── public.content
    ├── public.data
-   │  └── public.item
+   │  ╰── public.item
    ├── public.image
    │  ├── public.content
    │  ├── public.data
-   │  │  └── public.item
-   │  └── public.item
-   └── public.item
+   │  │  ╰── public.item
+   │  ╰── public.item
+   ╰── public.item
 ```

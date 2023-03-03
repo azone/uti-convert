@@ -37,6 +37,9 @@ struct uti_convert: ParsableCommand {
     @Flag(name: .long, help: "Show full information")
     var full: Bool = false
 
+    @Flag(name: .long, help: "Without UTI tree information")
+    var withoutTree: Bool = false
+
     @Option(
         name: .shortAndLong,
         help: """
@@ -150,7 +153,7 @@ Which type should convert, the available types are:
             .uniqued()
         print("File extensions: \(fileExtensions.joined(separator: ", "))")
 
-        if !identifers.isEmpty {
+        if !withoutTree && !identifers.isEmpty {
             print("UTI Tree:")
             print("╭────────╯")
             printUTITree(Array(types))
@@ -193,7 +196,7 @@ Which type should convert, the available types are:
     }
 
     private func treePrefix(isLeaf: Bool, leaves: [Bool]) -> String {
-        let suffix = isLeaf ? "└── " : "├── "
+        let suffix = isLeaf ? "╰── " : "├── "
         let prefix = leaves.map { $0 ? "   " : "│  " }
             .joined()
         return "\(prefix)\(suffix)"
