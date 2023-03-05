@@ -5,7 +5,7 @@ bindir ?= $(prefix)/bin
 
 .PHONY: install build clean uninstall
 
-all: install
+all: build install
 
 install: $(BUILD_FILE)
 	@install -d $(bindir)
@@ -20,7 +20,10 @@ else
 	$(error "Please build or install first")
 endif
 
-$(BUILD_FILE): build
+$(BUILD_FILE): 
+ifeq ($(wildcard $@),)
+	$(MAKE) build
+endif
 
 build:
 	@swift build -Xswiftc -Osize -c release
@@ -29,4 +32,4 @@ clean:
 	@rm -rf ./.build
 
 uninstall:
-	@sudo rm $(bindir)/uti-convert
+	@rm $(bindir)/uti-convert
