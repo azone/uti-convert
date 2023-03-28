@@ -1,14 +1,17 @@
+#!/usr/bin/env -S just --justfile
+
 binname := "uti-convert"
 build_dir := "./.build/release"
-build_file := build_dir + "/" + binname
+build_file := build_dir / binname
 
 prefix := "/usr/local"
-bindir := prefix + "/bin"
+bindir := prefix / "bin"
 
 default: build install
 
 install:
-    @install -d bindir
+    @{{path_exists(build_file)}} || make build
+    @install -d {{bindir}}
     @install -s {{build_file}} {{bindir}}
     @echo "Installed {{binname}} to {{bindir}}"
 
