@@ -1,3 +1,5 @@
+
+
 # uti-convert
 
 Convert file extension or MIME type to UTI(Uniform Type Identifiers) and vice versa.
@@ -145,7 +147,7 @@ UTI Tree:
 ╰── com.apple.private.auto-loop-gif
 ```
 
-### Convert file extension to UITs
+### Convert file extension to UTIs
 
 ```
 > uti-convert -f extension jpg
@@ -174,7 +176,7 @@ UTI Tree:
    ╰── public.item
 ```
 
-### Convert file to UITs
+### Convert file to UTIs
 
 ```
 > uti-convert -f file somefile.jpg
